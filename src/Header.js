@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 //import ReactDOM from "react-dom";
-//import header from "./Header.html"
+//import callback from "./chat.html"
 import {BrowserRouter, Route} from "react-router-dom";
+import Body from './Body.js';
 
 const Header = ()=>{
     return (
@@ -15,6 +16,8 @@ const Header = ()=>{
 }
 var client_id = '8HkITidEmr1tQaw5jtAL'
 var redirectURI = encodeURI("http://localhost:3000/chat")
+//var naver_id_login = new window.naver_id_login(client_id, redirectURI)
+//var state = naver_id_login.getUniqState()
 
 class NaverLogin extends Component{
     componentDidMount() {
@@ -29,7 +32,7 @@ class NaverLogin extends Component{
         return <div id="naver_id_login"></div>
     }
 }
-class Success extends React.Component {
+class Success extends Component {
     state = {
       nickname: ''
     }
@@ -38,9 +41,9 @@ class Success extends React.Component {
       window.naverSignInCallback = this.naverSignInCallback.bind(this)
     }
     naverSignInCallback() {
-      var naver_id_login = new window.naver_id_login(client_id, redirectURI)
+     var naver_id_login = new window.naver_id_login(client_id, redirectURI)
       this.setState({
-        nickname: naver_id_login.getProfileData('email')
+        nickname: naver_id_login.getProfileData('nickname')
       })
     }
     componentDidMount() {
@@ -50,7 +53,8 @@ class Success extends React.Component {
     }
     render() {
       return (
-        <div>환영합니다 {this.state.nickname}님</div>
+        //<div>환영합니다 {this.state.nickname}님</div>
+        <Route path="/chat" component={Body} />
       )
     }
   }
